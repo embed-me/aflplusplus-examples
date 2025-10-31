@@ -1,0 +1,29 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+        "name": "afl",
+        "displayName": "AFL++ Config",
+        "description": "AFL++ build using make generator",
+        "generator": "Unix Makefiles",
+        "binaryDir": "${sourceDir}/build/afl",
+        "environment": {
+            "PATH": "/opt/afl++/bin:$penv{PATH}"
+        },
+        "cacheVariables" : {
+            "CMAKE_CXX_COMPILER": "afl-clang-fast++"
+        }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "afl",
+      "configurePreset": "afl"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <unistd.h>
+
+using namespace std;
+
+__AFL_FUZZ_INIT();
+
+int main() {
+
+    #ifdef __AFL_HAVE_MANUAL_CONTROL
+        __AFL_INIT();
+    #endif
+
+    unsigned char *buf = __AFL_FUZZ_TESTCASE_BUF;
+
+    while (__AFL_LOOP(10000))
+    {
+        int len = __AFL_FUZZ_TESTCASE_LEN;
+        string str(reinterpret_cast<char*>(buf), static_cast<size_t>(len));
+
+        if(str.length() < 4) {
+            return 0;
+        }
+
+        if (str[0] == 'd') {
+            if (str[1] == 'e') {
+                if (str[2] == 'a') {
+                    if (str[3] == 'd') {
+                        abort();
+                    }
+                }
+            }
+        }
+    }
+
+    // if (strcmp(str.c_str(), "dead") == 0) {
+    //     abort();
+    // }
+    
+    return 0;
+}
